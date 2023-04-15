@@ -10,4 +10,4 @@ Run the install script `./install.sh` in order to create a virtual environment a
 
 After that, run `source findmeaseries_venv/bin/activate` to activate the virtual environment (and simply `deactivate` to deactivate it later).
 
-In order to use the virtual environment in your jupyter notebook, simply run `pip install --user ipykernel` and after that `python -m ipykernel install --user --name=findmeaseries_venv`. Now you can select the virtual environment as a kernel inside of jupyter notebook.
+In order to use the virtual environment in your jupyter notebook, simply run `pip3 install --user ipykernel` (note: you possibly have to change the line `include-system-site-packages = false` in `recommender_venv/pyvenv.cfg` to `true`) and after that `python3 -m ipykernel install --user --name=findmeaseries_venv`. Now you can select the virtual environment as a kernel inside of jupyter notebook.
