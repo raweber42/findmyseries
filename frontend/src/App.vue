@@ -3,7 +3,7 @@
     <div class="content-wrap">
       <header>
         <div class="title">
-          <h1>findmeaseries.com</h1>
+          <h1>findmyseries.com</h1>
         </div>
         <div class="top-nav">
           <a class="menuOption" id="number1">more</a>
@@ -16,7 +16,14 @@
       <div class="website-body">
         <div class="recommender">
           <div class="input-wrapper">
-            <input placeholder="Please enter a movie that you like"/>
+              <input
+              id="inputField"
+              type="text"
+              @keyup.enter="runSearch(searchInput)"
+              placeholder="Please enter a movie that you like"
+              v-model="searchInput"
+              aria-label="inputField"
+            />
           </div>
           <div class="input-submit">
             <button>Start recommending</button>
@@ -24,18 +31,35 @@
         </div>
       </div>
       <footer>
-        Made with ❤️ raweber42
+        Made with ❤️ by <a href="https://www.linkedin.com/in/ralfdimitrijweber/">Ralf</a>
       </footer>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import useUserDataStore from './stores/userDataStore';
+import DataService from './services/DataService';
 
 export default defineComponent({
-  name: 'App',
-  components: {
+  setup() {
+    const store = useUserDataStore();
+    const searchInput = ref('');
+    const searchOutput = ref('');
+
+    const runSearch = async (input: string) => {
+      await DataService.runSearch(input)
+        .then((response: any) => {
+          searchOutput.value = response.data;
+        })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    };
+    return {
+      store, searchInput, searchOutput, runSearch,
+    };
   },
 });
 </script>
@@ -94,5 +118,15 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+footer a:link {
+  color: var(--first-highlight-color);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--first-highlight-color);
+  text-decoration: underline;
 }
 </style>
