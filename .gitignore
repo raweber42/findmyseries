@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # COSTUM
+node_modules
 recommender_venv

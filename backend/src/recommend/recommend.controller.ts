@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Query, Req } from '@nestjs/common';
-import { Request } from 'express';
 import { RecommendService } from './recommend.service';
 import { Movie } from './dto/movie.interface';
 
@@ -10,6 +9,6 @@ export class RecommendController {
   
   @Get()
   async getRecommendation(@Query('movie') movie: Movie): Promise<string> {
-    return this.recommendService.getRecommendation(movie);
+    return await this.recommendService.getRecommendation(movie);
   }
 }
