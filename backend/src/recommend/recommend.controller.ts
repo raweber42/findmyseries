@@ -8,7 +8,7 @@ export class RecommendController {
   constructor(private recommendService: RecommendService) {}
   
   @Get()
-  async getRecommendation(@Query('movie') movie: Movie): Promise<string> {
-    return await this.recommendService.getRecommendation(movie);
+  async getRecommendation(@Query('movie') movie: Movie) {
+    return await this.recommendService.getRecommendation(movie);   
   }
 }

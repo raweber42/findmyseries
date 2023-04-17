@@ -3,20 +3,28 @@ import Movie from './dto/movie.interface'
 
 @Injectable()
 export class RecommendService {
-  async getRecommendation(movie: Movie) {
+  getRecommendation(movie: Movie) {
 
     const { spawn } = require('child_process');
-    let pythonReturn = "";
-    const pyProg = spawn('python3', ['src/recommend/test.py']);
-    await pyProg.stdout.on('data', async (data: any) => {
-      pythonReturn = data.toString();
-      console.log(pythonReturn);
+    const pyPromise = new Promise((resolve, reject) => {
+      const pyProg = spawn('python3', ['src/recommend/test.py']);
+      pyProg.stdout.on('data', (data:any) => {
+        resolve(data.toString());
+      })
+      pyProg.stderr.on('data', (data: any) => {
+        console.error(data.toString());
+        reject("Error in python script occured!"); // make this user friendly!
+      });
     });
-    await pyProg.stderr.on('data', async (data: any) => {
-      console.error(data.toString());
-    });
-    console.log("Return should be: |" + pythonReturn + "|");
-    return pythonReturn.toString();
-    // return `This action returns all recommendations for: ${pythonReturn}`; 
+
+    const consumer = pyPromise.then((result: any) => {
+        console.log(result);
+        return result;
+      },
+      (error: any) => {
+        console.log(error);
+        return error.toString();
+      });
+    return consumer;
   }
 }
