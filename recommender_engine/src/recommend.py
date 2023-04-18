@@ -22,7 +22,7 @@ def recommend(input_title, scores_df, df):
 def main():
   
   # Read the data
-  df = pd.read_csv("../datasets/netflix_movies_and_shows_1/netflix_titles.csv")
+  df = pd.read_csv("/home/dima/dev/findmeaseries/recommender_engine/datasets/netflix_movies_and_shows_1/netflix_titles.csv")
 
   # Build a column of combined values from the relevant columns
   relevant_cols = ['type', 'title', 'director', 'cast', 'rating', 'listed_in', 'description']

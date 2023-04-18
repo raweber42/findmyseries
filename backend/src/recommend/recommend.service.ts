@@ -7,7 +7,7 @@ export class RecommendService {
 
     const { spawn } = require('child_process');
     const pyPromise = new Promise((resolve, reject) => {
-      const pyProg = spawn('python3', ['src/recommend/test.py']);
+      const pyProg = spawn('python3', ['/home/dima/dev/findmeaseries/recommender_engine/src/recommend.py', '2012']); // HARD CODED
       pyProg.stdout.on('data', (data:any) => {
         resolve(data.toString());
       })
