@@ -14,8 +14,8 @@ def recommend(input_title, scores_df, df):
     df['title'] = df['title'].str.lower()
     index = df[df['title'] == input_title].index[0]
     
-    top5_list = list(scores_df.iloc[index].sort_values(ascending = False).iloc[1:6].index)
-    for each in top5_list:
+    top3_list = list(scores_df.iloc[index].sort_values(ascending = False).iloc[1:4].index)
+    for each in top3_list:
         recommended.append(df.iloc[each].title)
     return recommended
 

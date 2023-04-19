@@ -28,8 +28,8 @@
           <div class="input-submit">
             <button >Start recommending</button>
           </div>
-          <div class="response-wrapper">
-            <p> {{ searchOutput }} </p>
+          <div class="response-wrapper" v-for="(output) in searchOutput" :key="output">
+            <p> {{ output }} </p>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default defineComponent({
   setup() {
     const store = useUserDataStore();
     const searchInput = ref('');
-    const searchOutput = ref('');
+    const searchOutput = ref([]);
 
     const runSearch = async () => {
       await DataService.runSearch(searchInput.value)

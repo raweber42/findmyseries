@@ -8,7 +8,8 @@ export class RecommendService {
     const { spawn } = require('child_process');
     const pyPromise = new Promise((resolve, reject) => {
       const pyProg = spawn('python3', ['/home/dima/dev/findmeaseries/recommender_engine/src/recommend.py', movie]);
-      pyProg.stdout.on('data', (data:any) => {
+      pyProg.stdout.on('data', (data: any) => {
+        console.log(data.toString());
         resolve(data.toString());
       })
       pyProg.stderr.on('data', (data: any) => {
@@ -17,8 +18,10 @@ export class RecommendService {
       });
     });
 
-    const consumer = pyPromise.then((result: any) => {
+    const consumer = pyPromise.then((result: string) => {
         Logger.log("Search successful");
+        result = result.replace(/'/g, '"') //replacing all ' with "
+        result = JSON.parse(result)
         return result;
       })
       .catch((error: Error) => {
