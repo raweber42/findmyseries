@@ -6,9 +6,9 @@ import { Movie } from './dto/movie.interface';
 export class RecommendController {
   
   constructor(private recommendService: RecommendService) {}
-  
+
   @Get()
-  async getRecommendation(@Query('movie') movie: Movie) {
+  async getRecommendation(@Query('movie') movie: string) {
     return await this.recommendService.getRecommendation(movie);   
   }
 }

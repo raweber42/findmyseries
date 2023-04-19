@@ -19,14 +19,17 @@
               <input
               id="inputField"
               type="text"
-              @keyup.enter="runSearch(searchInput)"
+              @keyup.enter="runSearch()"
               placeholder="Please enter a movie that you like"
               v-model="searchInput"
               aria-label="inputField"
             />
           </div>
           <div class="input-submit">
-            <button>Start recommending</button>
+            <button >Start recommending</button>
+          </div>
+          <div class="response-wrapper">
+            <p> {{ searchOutput }} </p>
           </div>
         </div>
       </div>
@@ -48,10 +51,11 @@ export default defineComponent({
     const searchInput = ref('');
     const searchOutput = ref('');
 
-    const runSearch = async (input: string) => {
-      await DataService.runSearch(input)
+    const runSearch = async () => {
+      await DataService.runSearch(searchInput.value)
         .then((response: any) => {
           searchOutput.value = response.data;
+          searchInput.value = '';
         })
         .catch((e: Error) => {
           console.log(e);
