@@ -1,43 +1,92 @@
 <template>
-  <div class="app">
-    <div class="content-wrap">
-      <header>
-        <div class="title">
-          <h1>findmyseries.com</h1>
+  <div class="container">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">findmyseries.com</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">More</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Stuff</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Soon</a>
+            </li>
+          </ul>
         </div>
-        <div class="top-nav">
-          <a class="menuOption" id="number1">more</a>
-          <a class="menuOption" id="number2">stuff</a>
-          <a class="menuOption" id="number3">soon</a>
-        </div>
-      </header>
-      <!-- popups go here!-->
-      <!-- <LoginPopup /> -->
-      <div class="website-body">
-        <div class="recommender">
-          <div class="input-wrapper">
+      </nav>
+    </header>
+    <body>
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <form>
+            <div class="input-group mb-3">
               <input
-              id="inputField"
               type="text"
+              class="form-control form-control-sm border border-grey"
+              placeholder="You're looking for a movie like..."
+              aria-label="Search Input"
+              aria-describedby="search-btn"
               @keyup.enter="runSearch()"
-              placeholder="Please enter a movie that you like"
               v-model="searchInput"
-              aria-label="inputField"
-            />
+              />
+              <button
+              class="btn btn-outline-secondary btn-sm"
+              type="button"
+              id="search-btn"
+              >
+              Search
+            </button>
           </div>
-          <div class="input-submit">
-            <button >Start recommending</button>
+        </form>
+      </div>
+    </div>
+  </body>
+
+  <div class="container website-body">
+    <div class="container p-3">
+      <div class="row align-items-start">
+        <div class="card-group">
+          <div class="card border-dark text-center shadow-lg ">
+            <img class="card-img-top" src="./assets/download.jpeg" alt="movie picture">
+            <div class="card-body">
+              {{ searchOutput[0] }}
+            </div>
           </div>
-          <div class="response-wrapper" v-for="(output) in searchOutput" :key="output">
-            <p> {{ output }} </p>
+          <div class="card border-dark text-center shadow-lg">
+                <img src="./assets/download.jpeg" alt="movie picture">
+                <div class="card-body">
+                  {{ searchOutput[1] }}
+                </div>
+              </div>
+              <div class="card border-dark text-center shadow-lg">
+                <img src="./assets/download.jpeg" alt="movie picture">
+                <div class="card-body">
+                  {{ searchOutput[2] }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <footer>
+      <!-- v-for="output in searchOutput" :key="output MAYBE flex-row!"-->
+      <!-- <footer>
         Made with ❤️ by <a href="https://www.linkedin.com/in/ralfdimitrijweber/">Ralf</a>
-      </footer>
+      </footer> -->
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -69,21 +118,37 @@ export default defineComponent({
 </script>
 
 <style>
-header {
+.input-group {
+  margin-top: 2rem;
+}
+
+/* input[type=text] {
+  padding: 4px 8px;
+} */
+.input-group > input:focus,
+.input-group > button:focus {
+  box-shadow: 0 0 0 1px grey;
+}
+
+.navbar-nav li:hover {
+  background-color: grey !important;
+  color: white !important; /*WHY NOT WORKING??*/
+  transition: .6s;
+}
+
+/* header {
   text-align: center;
 }
 
 .top-nav {
   overflow: hidden;
   background-color: var(--second-bg-color);
-  /* margin: 0 0 1em 0; */
   padding: 10px;
   left:0px;
   right:0px;
 }
 
 .top-nav a {
-  /* display: block; */
   color: var(--main-font-color);
   text-align: center;
   padding: 14px 18px;
@@ -102,10 +167,6 @@ header {
 .recommender {
   text-align: center;
   margin: 25% 0;
-}
-
-.input-wrapper {
-  /* margin-top: 50px; */
 }
 
 .input-wrapper input {
@@ -132,5 +193,5 @@ footer a:link {
 footer a:hover {
   color: var(--first-highlight-color);
   text-decoration: underline;
-}
+} */
 </style>
