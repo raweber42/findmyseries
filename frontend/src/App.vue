@@ -30,7 +30,8 @@
       </nav>
     </header>
     <body>
-      <div class="row justify-content-center">
+      <InputForm></InputForm>
+      <!-- <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
           <form @submit.prevent>
             <div class="input-group mb-3">
@@ -54,19 +55,19 @@
             </div>
           </form>
         </div>
-      </div>
+      </div> -->
 
       <div class="container">
         <div class="text-center">
-          <div class="spinner-border mt-5" role="status" v-if="searchRunning == true">
+          <div class="spinner-border mt-5" role="status" v-if="store.searchRunning == true">
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
         <div class="container p-3">
           <div class="row row-cols-1 row-cols-md-3 align-items-start justify-content-center"
           id="card-row">
-            <div v-for="output in searchOutput" :key="output">
-              <div class="col" v-if="searchFinished != false">
+            <div v-for="output in store.searchOutput" :key="output">
+              <div class="col" v-if="store.searchFinished != false">
                 <div class="card-container">
                   <div class="card border-dark text-center shadow-lgcenter-content">
                     <img class="card-img-top" src="./assets/download.jpeg" alt="movie picture">
@@ -94,52 +95,36 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import useUserDataStore from './stores/userDataStore';
-import DataService from './services/DataService';
+import InputForm from './components/InputForm.vue';
 
 export default defineComponent({
+
+  components: { InputForm },
+
   setup() {
     const store = useUserDataStore();
-    const searchInput = ref('');
-    const searchOutput = ref([]);
-    const searchFinished = ref(false);
-    const searchRunning = ref(false);
+    // const searchInput = ref('');
+    // const searchOutput = ref([]);
+    // const searchFinished = ref(false);
+    // const searchRunning = ref(false);
 
-    const runSearch = async () => {
-      searchFinished.value = false;
-      searchRunning.value = true;
-      await DataService.runSearch(searchInput.value)
-        .then((response: any) => {
-          searchOutput.value = response.data;
-          searchInput.value = '';
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
-      searchFinished.value = true;
-      searchRunning.value = false;
-    };
-
-    // SAME HEIGHT CARDS
-    function setEqualHeight() {
-      const cardContainers = document.querySelectorAll('#card-row .card-container');
-      let maxHeight = 0;
-      cardContainers.forEach((cardContainer: Element) => {
-        const { height } = cardContainer.getBoundingClientRect();
-        if (height > maxHeight) {
-          maxHeight = height;
-        }
-      });
-      cardContainers.forEach((cardContainer: Element) => {
-        (cardContainer as HTMLElement).style.height = `${maxHeight}px`; // eslint-disable-line no-param-reassign
-      });
-    }
-
-    window.addEventListener('load', setEqualHeight);
-    window.addEventListener('resize', setEqualHeight);
-    // SAME HEIGHT CARDS
+    // const runSearch = async () => {
+    //   searchFinished.value = false;
+    //   searchRunning.value = true;
+    //   await DataService.runSearch(searchInput.value)
+    //     .then((response: any) => {
+    //       searchOutput.value = response.data;
+    //       searchInput.value = '';
+    //     })
+    //     .catch((e: Error) => {
+    //       console.log(e);
+    //     });
+    //   searchFinished.value = true;
+    //   searchRunning.value = false;
+    // };
 
     return {
-      store, searchInput, searchOutput, searchRunning, searchFinished, runSearch,
+      store,
     };
   },
 });
@@ -150,9 +135,6 @@ export default defineComponent({
   margin-top: 2rem;
 }
 
-/* input[type=text] {
-  padding: 4px 8px;
-} */
 .input-group > input:focus,
 .input-group > button:focus {
   box-shadow: 0 0 0 1px grey;
