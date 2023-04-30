@@ -131,3 +131,4 @@ dmypy.json
 # COSTUM
 node_modules
 recommender_venv
+findmeaseries_venv
