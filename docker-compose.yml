@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+
+  backend:
+    container_name: backend
+    build: ./backend
+    networks:
+    - external
+    ports:
+    - 3000:3000
+    restart: unless-stopped
+    depends_on:
+      - recommendation_api
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    networks:
+    - external
+    ports:
+    - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - recommendation_api
+
+  recommendation_api:
+    container_name: recommendation_api
+    build: ./recommend_api
+    networks:
+    - external
+    ports:
+    - 5000:5000
+    restart: unless-stopped
+  
+networks:
+  external:
+    driver: bridge

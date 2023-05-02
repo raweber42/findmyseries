@@ -1,4 +1,3 @@
-import sys
 import pandas as pd
 import numpy as np
 import nltk
@@ -8,7 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Recommender function
-def recommend(input_title, scores_df, df):
+def get_top_three(input_title, scores_df, df):
     recommended = []
     input_title = input_title.lower()
     df['title'] = df['title'].str.lower()
@@ -19,10 +18,10 @@ def recommend(input_title, scores_df, df):
         recommended.append(df.iloc[each].title)
     return recommended
 
-def main():
+def recommend(input_movie):
   
   # Read the data
-  df = pd.read_csv("/home/dima/dev/findmeaseries/recommender_engine/datasets/netflix_movies_and_shows_1/netflix_titles.csv")
+  df = pd.read_csv("./datasets/netflix_movies_and_shows_1/netflix_titles.csv")
 
   # Build a column of combined values from the relevant columns
   relevant_cols = ['type', 'title', 'director', 'cast', 'rating', 'listed_in', 'description']
@@ -37,8 +36,22 @@ def main():
   similarity_scores = cosine_similarity(sparse_matrix, sparse_matrix)
   similarity_scores = pd.DataFrame(similarity_scores)
 
-  print(recommend(sys.argv[1], similarity_scores, df))
-  return recommend(sys.argv[1], similarity_scores, df)
+  print(get_top_three(input_movie, similarity_scores, df))
+  return get_top_three(input_movie, similarity_scores, df)
+
+
+from flask import Blueprint, request, json
+
+bp = Blueprint('recommend', __name__)
+
+@bp.route('/recommend', methods=['GET'])
+def recommend_movies():
+  args = request.args
+  print("in recommendation-api: ")
+  print(args)
+  recommendation = recommend(args['movie'])
+  print(recommendation)
+  return recommendation
 
 if __name__ == '__main__':
-    main()
+    api.run(debug=True)
