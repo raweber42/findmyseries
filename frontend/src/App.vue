@@ -31,32 +31,6 @@
     </header>
     <body>
       <InputForm></InputForm>
-      <!-- <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-          <form @submit.prevent>
-            <div class="input-group mb-3">
-              <input
-              type="text"
-              class="form-control form-control-sm border border-grey"
-              placeholder="You're looking for a movie like..."
-              aria-label="Search Input"
-              aria-describedby="search-btn"
-              @keyup.enter="runSearch()"
-              v-model="searchInput"
-              />
-              <button
-              class="btn btn-outline-secondary btn-sm"
-              type="button"
-              id="search-btn"
-              @click="runSearch()"
-              >
-              Search
-              </button>
-            </div>
-          </form>
-        </div>
-      </div> -->
-
       <div class="container">
         <div class="text-center">
           <div class="spinner-border mt-5" role="status" v-if="store.searchRunning == true">
@@ -66,13 +40,23 @@
         <div class="container p-3">
           <div class="row row-cols-1 row-cols-md-3 align-items-start justify-content-center"
           id="card-row">
-            <div v-for="output in store.searchOutput" :key="output">
-              <div class="col" v-if="store.searchFinished != false">
+            <div v-for="(output) in store.searchOutput" :key="output">
+              <div class="col" v-if="store.searchFinished != false && store.searchFailed != true">
                 <div class="card-container">
                   <div class="card border-dark text-center shadow-lgcenter-content">
-                    <img class="card-img-top" src="./assets/download.jpeg" alt="movie picture">
+                    <img class="card-img-top" src="./assets/placeholder.jpeg" alt="movie picture">
                     <div class="card-body">
                       {{ output }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col" v-if="store.searchFailed == true">
+                <div class="card-container">
+                  <div class="card border-dark text-center shadow-lgcenter-content">
+                    <img class="card-img-top" src="./assets/unknown_movie.jpg" alt="movie picture">
+                    <div class="card-body">
+                      Sorry, I don't know this movie (yet)!
                     </div>
                   </div>
                 </div>

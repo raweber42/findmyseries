@@ -42,13 +42,16 @@ export default defineComponent({
     const runSearch = async () => {
       store.searchFinished = false;
       store.searchRunning = true;
+      store.searchFailed = false;
       await DataService.runSearch(store.searchInput)
         .then((response: any) => {
           store.searchOutput = response.data;
           store.searchInput = '';
         })
         .catch((e: Error) => {
-          console.log(e);
+          store.searchOutput = ['Unknown movie'];
+          store.searchInput = '';
+          store.searchFailed = true;
         });
       store.searchFinished = true;
       store.searchRunning = false;
