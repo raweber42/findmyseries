@@ -22,4 +22,7 @@ jobs:
           sleep 15
 
       - name: Test web service
-        run: curl localhost:8080
+        run: |
+          curl localhost:5000/recommend?movie=2012
+          curl localhost:3000/recommend?movie=2012
+          wget localhost:8080
