@@ -1,4 +1,4 @@
-name: HealthCheck
+name: Build and Test
 
 on:
   push:
@@ -6,23 +6,34 @@ on:
       - main
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Install dependencies
+      run: |
+        cd frontend && npm install
+        cd ../backend && npm install
+        cd ../recommend_api && npm install
+    
+    - name: Start services
+      run: docker-compose up -d --build
 
-      - name: Build and start containers
-        run: docker-compose up -d --build
+    - name: Wait for web service to start
+      run: |
+        echo "Waiting for web service to start..."
+        sleep 15
 
-      - name: Wait for web service to start
-        run: |
-          echo "Waiting for web service to start..."
-          sleep 15
-
-      - name: Test web service
-        run: |
-          curl localhost:5000/recommend?movie=2012
-          curl localhost:3000/recommend?movie=2012
-          wget localhost:8080
+    - name: Test web APIs
+      run: |
+        curl localhost:5000/recommend?movie=2012
+        curl localhost:3000/recommend?movie=2012
+  
+    - name: Test website availability
+      run: curl localhost:8080
+    
+    - name: Stop services
+      run: docker-compose down
