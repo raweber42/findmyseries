@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import Movie from './dto/movie.interface'
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ export class RecommendService {
       return (response.data);
     } catch (error: any) {
       Logger.error("Search failed: ", error);
-      return "Sorry, I don't know this movie (yet)";
+      throw new HttpException('Movie not known (yet)', HttpStatus.BAD_REQUEST);
     }
     // const responsePromise = new Promise((resolve, reject) => {
       
