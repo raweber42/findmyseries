@@ -1,4 +1,6 @@
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 import numpy as np
 import nltk
 import re
@@ -23,19 +25,9 @@ def recommend(input_movie):
   # Read the data
   df = pd.read_csv("./datasets/netflix_movies_and_shows_1/netflix_titles.csv")
 
-  # Build a column of combined values from the relevant columns
-  relevant_cols = ['type', 'title', 'director', 'cast', 'rating', 'listed_in', 'description']
-  df['combined'] = df[relevant_cols].apply(lambda row: ' '.join(row.values.astype(str)), axis=1)
+  similarity_scores = pd.read_parquet('/models/similarity_scores.parquet', engine='pyarrow')
 
-  # Convert all words to lowercase and remove stop words
-  documents = df['combined']
-  count_vectorizer = CountVectorizer(stop_words='english')
-  sparse_matrix = count_vectorizer.fit_transform(documents)
-
-  # Compute similarity score between each document
-  similarity_scores = cosine_similarity(sparse_matrix, sparse_matrix)
-  similarity_scores = pd.DataFrame(similarity_scores)
-
+  print("Top three are: ")
   print(get_top_three(input_movie, similarity_scores, df))
   return get_top_three(input_movie, similarity_scores, df)
 
@@ -47,10 +39,10 @@ bp = Blueprint('recommend', __name__)
 @bp.route('/recommend', methods=['GET'])
 def recommend_movies():
   args = request.args
-  print("in recommendation-api: ")
-  print(args)
+  # print("in recommendation-api: ")
+  # print(args['movie'])
   recommendation = recommend(args['movie'])
-  print(recommendation)
+  # print(recommendation)
   return recommendation
 
 if __name__ == '__main__':

@@ -33,7 +33,17 @@ services:
     ports:
     - 5000:5000
     restart: unless-stopped
+    volumes:
+      - model_volume:/models
   
 networks:
   external:
     driver: bridge
+
+volumes:
+  model_volume:
+    name: "model_volume"
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/dima/dev/findmyseries/recommend_api/models
