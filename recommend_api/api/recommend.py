@@ -1,3 +1,4 @@
+import os.path
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -7,6 +8,7 @@ import re
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from .train import train_model
 
 # Recommender function
 def get_top_three(input_title, scores_df, df):
@@ -25,6 +27,8 @@ def recommend(input_movie):
   # Read the data
   df = pd.read_csv("./datasets/netflix_movies_and_shows_1/netflix_titles.csv")
 
+  if not os.path.exists('/models/similarity_scores.parquet'):
+    train_model()
   similarity_scores = pd.read_parquet('/models/similarity_scores.parquet', engine='pyarrow')
 
   print("Top three are: ")
