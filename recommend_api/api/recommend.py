@@ -22,10 +22,10 @@ def get_top_three(input_title, scores_df, df):
         recommended.append(df.iloc[each].title)
     return recommended
 
-def recommend(input_movie):
+def recommend(input_movie): # NEW DATASET
   
   # Read the data
-  df = pd.read_csv("./datasets/netflix_movies_and_shows_1/netflix_titles.csv")
+  df = pd.read_csv("./datasets/tmdb/selected_movies.csv")
 
   if not os.path.exists('/models/similarity_scores.parquet'):
     train_model()
@@ -34,6 +34,20 @@ def recommend(input_movie):
   print("Top three are: ")
   print(get_top_three(input_movie, similarity_scores, df))
   return get_top_three(input_movie, similarity_scores, df)
+
+
+# def recommend(input_movie):
+  
+#   # Read the data
+#   df = pd.read_csv("./datasets/netflix_movies_and_shows_1/netflix_titles.csv")
+
+#   if not os.path.exists('/models/similarity_scores.parquet'):
+#     train_model()
+#   similarity_scores = pd.read_parquet('/models/similarity_scores.parquet', engine='pyarrow')
+
+#   print("Top three are: ")
+#   print(get_top_three(input_movie, similarity_scores, df))
+#   return get_top_three(input_movie, similarity_scores, df)
 
 
 from flask import Blueprint, request, json
