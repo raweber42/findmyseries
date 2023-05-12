@@ -4,7 +4,7 @@ import type { IMovie } from '@/types/IMovie';
 const useUserDataStore = defineStore('store', {
   state: () => ({
     searchInput: '',
-    searchOutput: [] as string[],
+    searchOutput: [] as IMovie[],
     searchRunning: false,
     searchFinished: false,
     searchFailed: false,

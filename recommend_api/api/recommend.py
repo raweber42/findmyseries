@@ -9,6 +9,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from .train import train_model
+from flask import jsonify
 
 # Recommender function
 def get_top_three(input_title, scores_df, df):
@@ -19,7 +20,14 @@ def get_top_three(input_title, scores_df, df):
     
     top3_list = list(scores_df.iloc[index].sort_values(ascending = False).iloc[1:4].index)
     for each in top3_list:
-        recommended.append(df.iloc[each].title)
+        recommended.append(
+          # df.iloc[each].title
+          {
+            "title": df.iloc[each].title,
+            "id": f"{df.iloc[each].id}",
+            "poster_path": df.iloc[each].poster_path
+          }
+        )
     return recommended
 
 def recommend(input_movie): # NEW DATASET
@@ -61,7 +69,7 @@ def recommend_movies():
   # print(args['movie'])
   recommendation = recommend(args['movie'])
   # print(recommendation)
-  return recommendation
+  return jsonify(recommendation)
 
 if __name__ == '__main__':
     api.run(debug=True)

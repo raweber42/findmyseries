@@ -8,7 +8,7 @@ export class RecommendService {
     
     try {
       const response = await axios.get('http://recommendation_api:5000/recommend?movie=' + movie);
-      console.log("Response from flask: " + response)
+      Logger.log("Response from flask: " + response)
       return (response.data);
     } catch (error: any) {
       Logger.error("Search failed: ", error);

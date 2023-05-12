@@ -40,13 +40,13 @@
         <div class="container p-3">
           <div class="row row-cols-1 row-cols-md-3 align-items-start justify-content-center"
           id="card-row">
-            <div v-for="(output) in store.searchOutput" :key="output">
+            <div v-for="(output) in store.searchOutput" :key="output.id">
               <div class="col" v-if="store.searchFinished != false && store.searchFailed != true">
                 <div class="card-container">
                   <div class="card border-dark text-center shadow-lgcenter-content">
-                    <img class="card-img-top" src="./assets/placeholder.jpeg" alt="movie picture">
+                    <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500/' + output.poster_path" alt="movie picture">
                     <div class="card-body">
-                      {{ output }}
+                      {{ output.title }}
                     </div>
                   </div>
                 </div>
@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import useUserDataStore from './stores/userDataStore';
 import InputForm from './components/InputForm.vue';
 
@@ -87,25 +87,6 @@ export default defineComponent({
 
   setup() {
     const store = useUserDataStore();
-    // const searchInput = ref('');
-    // const searchOutput = ref([]);
-    // const searchFinished = ref(false);
-    // const searchRunning = ref(false);
-
-    // const runSearch = async () => {
-    //   searchFinished.value = false;
-    //   searchRunning.value = true;
-    //   await DataService.runSearch(searchInput.value)
-    //     .then((response: any) => {
-    //       searchOutput.value = response.data;
-    //       searchInput.value = '';
-    //     })
-    //     .catch((e: Error) => {
-    //       console.log(e);
-    //     });
-    //   searchFinished.value = true;
-    //   searchRunning.value = false;
-    // };
 
     return {
       store,

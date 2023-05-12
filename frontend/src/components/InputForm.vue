@@ -27,17 +27,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import useUserDataStore from '../stores/userDataStore';
 import DataService from '../services/DataService';
 
 export default defineComponent({
   setup() {
     const store = useUserDataStore();
-    // const searchInput = ref('');
-    // const searchOutput = ref([]);
-    // const searchFinished = ref(false);
-    // const searchRunning = ref(false);
 
     const runSearch = async () => {
       store.searchFinished = false;
@@ -49,7 +45,7 @@ export default defineComponent({
           store.searchInput = '';
         })
         .catch((e: Error) => {
-          store.searchOutput = ['Unknown movie'];
+          store.searchOutput = [{ id: -1, poster_path: './assets/placeholder.jpeg', title: 'Unknown movie' }];
           store.searchInput = '';
           store.searchFailed = true;
         });
