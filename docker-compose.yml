@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.6'
 
 services:
 
@@ -9,9 +9,9 @@ services:
     - external
     ports:
     - 3000:3000
-    restart: unless-stopped
+    restart: always
     depends_on:
-      - recommendation_api
+      - recommendation-api
 
   frontend:
     container_name: frontend
@@ -20,19 +20,19 @@ services:
     - external
     ports:
     - 8080:8080
-    restart: unless-stopped
+    restart: always
     depends_on:
       - backend
-      - recommendation_api
+      - recommendation-api
 
-  recommendation_api:
-    container_name: recommendation_api
-    build: ./recommend_api
+  recommendation-api:
+    container_name: recommendation-api
+    build: ./recommendation-api
     networks:
     - external
     ports:
     - 5000:5000
-    restart: unless-stopped
+    restart: always
     volumes:
       - model_volume:/models
   
@@ -46,4 +46,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/dima/dev/findmyseries/recommend_api/models
+      device: /home/dima/dev/findmyseries/recommendation-api/models
