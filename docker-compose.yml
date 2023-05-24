@@ -4,7 +4,8 @@ services:
 
   backend:
     container_name: backend
-    build: ./backend
+    # build: ./backend
+    image: raweber42/findmyseries-backend:0.0.1
     networks:
     - external
     ports:
@@ -15,7 +16,8 @@ services:
 
   frontend:
     container_name: frontend
-    build: ./frontend
+    image: raweber42/findmyseries-frontend:0.0.4
+    # build: ./frontend
     networks:
     - external
     ports:
@@ -27,7 +29,8 @@ services:
 
   recommendation-api:
     container_name: recommendation-api
-    build: ./recommendation-api
+    image: raweber42/findmyseries-recommendation-api:0.0.1
+    # build: ./recommendation-api
     networks:
     - external
     ports:
