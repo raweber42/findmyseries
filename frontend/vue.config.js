@@ -4,7 +4,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     allowedHosts: [
-      '0.0.0.0',
+      'all', // https://webpack.js.org/configuration/dev-server/#devserverallowedhosts
     ],
   },
 });
