@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-api
+  labels:
+    app: recommendation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-api
+  template:
+    metadata:
+      labels:
+        app: recommendation-api
+    spec:
+      containers:
+        - name: recommendation-api
+          image: raweber42/findmyseries-recommendation-api:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /models
+              name: model-volume
+      volumes:
+        - name: model-volume
+          persistentVolumeClaim:
+            claimName: model-volume
