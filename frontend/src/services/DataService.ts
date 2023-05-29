@@ -5,5 +5,10 @@ class DataService {
     const data = await apiInstance.get(`/recommend?movie=${searchInput}`);
     return data;
   }
+
+  // runSearchNoQuery = async () => {
+  //   const data = await apiInstance.get('/recommend');
+  //   return data;
+  // }
 }
 export default new DataService();

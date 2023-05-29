@@ -1,21 +1,30 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: my-ingress
+  name: backend-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/enable-cors: "true"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
   - host: findmyseries.xyz
     http:
       paths:
-      - path: /
+      # - path: /backend(/|$)(.*) # THIS WORKS!!!! *(but only for /recommend, no query etc)
+      - path: /backend(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: frontend
+            name: backend
+            port:
+              name: http
+      - path: /recommendation-api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: recommendation-api
             port:
               name: http
       - path: /backend

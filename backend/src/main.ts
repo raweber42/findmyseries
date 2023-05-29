@@ -5,13 +5,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { 
     cors: true
   });
-  
-  // app.enableCors({
-	// 	origin: `${process.env.FRONTEND_URL}`,
-    
-	// 	methods: ["GET", "POST"],
-	// 	// credentials: true,
-	// });
+  app.enableCors({
+		origin: '<http://findmyseries.xyz>',
+		methods: ['GET'],
+		// credentials: true,
+	});
   
   await app.listen(3000);
 }
