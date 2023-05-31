@@ -12,35 +12,6 @@ spec:
   - host: findmyseries.xyz
     http:
       paths:
-      # - path: /backend(/|$)(.*) # THIS WORKS!!!! *(but only for /recommend, no query etc)
-      # - path: /backend(/|$)(.*)
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: backend
-      #       port:
-      #         name: http
-      # - path: /recommendation-api(/|$)(.*)
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: recommendation-api
-      #       port:
-      #         name: http
-      # - path: /backend
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: backend
-      #       port:
-      #         name: http
-      # - path: /recommendation-api
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: recommendation-api
-      #       port:
-      #         name: http
       - path: /
         pathType: Prefix
         backend:

@@ -12,7 +12,6 @@ spec:
   - host: findmyseries.xyz
     http:
       paths:
-      # - path: /backend(/|$)(.*) # THIS WORKS!!!! *(but only for /recommend, no query etc)
       - path: /backend(/|$)(.*)
         pathType: Prefix
         backend:

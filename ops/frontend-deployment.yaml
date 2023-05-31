@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: raweber42/findmyseries-frontend:0.0.13
+          image: raweber42/findmyseries-frontend:0.0.14
           imagePullPolicy: Always
           ports:
             - name: http
