@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  namespace: findmyseries
   labels:
     app: backend
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: raweber42/findmyseries-backend:0.0.9
+          image: raweber42/findmyseries-backend:0.0.10
           imagePullPolicy: Always
           ports:
             - name: http

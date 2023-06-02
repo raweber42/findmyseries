@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: recommendation-api
+  namespace: findmyseries
   labels:
     app: recommendation-api
 spec:

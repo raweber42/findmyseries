@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendation-api
+  namespace: findmyseries
   labels:
     app: recommendation-api
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: recommendation-api
-          image: raweber42/findmyseries-recommendation-api:0.0.1
+          image: raweber42/findmyseries-recommendation-api:0.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
